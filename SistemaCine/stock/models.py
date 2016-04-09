@@ -31,7 +31,4 @@ class OrdenDeCompra(models.Model):
         total = cantidad * producto.precio_compra
         return total
 
-class OrdenDeCompraDetalle(models.Model):
-    orden = models.ForeignKey(OrdenDeCompra, null = True)
-    producto = models.ForeignKey(Producto, null = True)
-    cantidad = models.IntegerField()
+
