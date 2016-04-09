@@ -21,4 +21,18 @@ class VentaDetalle(models.Model):
     #cantidad_combo = models.IntegerField()
     #precio = models.OneToOneRel(Combo)
 
+class OrdenDeCompra(models.Model):
+    fecha = models.DateField()
+    proveedor = models.ForeignKey(Proveedor, null = True)
+    total = models.IntegerField()
+    
+    def calcularTotal(self, producto, cantidad):
+        producto = Producto.objects.filter(id=producto)
+        total = cantidad * producto.precio_compra
+        return total
+    
+class OrdenDeCompraDetalle(models.Model):
+    orden = models.ForeignKey(OrdenDeCompra, null = True)
+    producto = models.ForeignKey(Producto, null = True)
+    cantidad = models.IntegerField()
 
