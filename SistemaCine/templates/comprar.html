@@ -1,0 +1,14 @@
+<div style="max-width:400px;margin-left: auto;margin-right:auto">
+					{% block title %}
+						<h3 class="form-signin-heading">Complete con sus datos</h3>
+					{% endblock %}
+					
+						<form action="{% url 'comprar' %}" method="post">
+    					{% csrf_token %}
+    					{{ form.as_p }}
+    					<br>
+   	 					<input type="submit" value="Comprar" />
+						</form>
+						
+					
+</div>
