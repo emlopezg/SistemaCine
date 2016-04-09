@@ -30,13 +30,15 @@ class Producto(models.Model):
 class ProductoFinal(models.Model):
     codigo = models.CharField('Codigo del Producto', max_length = 20,)
     descripcion = models.CharField('Descripcion del Producto', max_length=30,help_text='Introduce el nombre del producto a la venta')
-    producto = models.ManyToManyField(Producto, null = True)
+    producto = models.ManyToManyField(Producto)
     precio = models.IntegerField()
 
 class Combo(models.Model):
+    '''Abm de combos, para administrar los productos por combo'''
     codigo = models.CharField('Codigo del combo', max_length = 20)
     descripcion = models.TextField('Combo', max_length = 100, help_text='Introduce una descripcion del combo')
-    producto = models.ManyToManyField(ProductoFinal, null = True)
+    producto = models.ManyToManyField(ProductoFinal)
     cant_bebida = models.IntegerField()
     cant_comestible = models.IntegerField()
     cant_golosina = models.IntegerField()
+    precio = models.IntegerField()

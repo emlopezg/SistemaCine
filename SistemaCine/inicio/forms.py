@@ -1,7 +1,7 @@
 from django import forms
-from django.contrib.auth.models import User, AbstractUser
-from django.contrib.auth.forms import UserCreationForm
-from django.forms.models import ModelForm
+from django.contrib.auth.models import User
+#from django.contrib.auth.forms import UserCreationForm
+#from django.forms.models import ModelForm
 
 class UserForm(forms.Form):
     username = forms.CharField(min_length=5,max_length=20)

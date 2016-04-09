@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.contrib.auth import views
 from inicio import views as iniviews
 from django.views.static import serve
+from stock import views as stviews
 from django.conf import settings
 
 urlpatterns = [
@@ -27,6 +28,7 @@ urlpatterns = [
     url(r'^login', views.login, {'template_name': 'login.html'}, name="login"),
     url(r'^logout$', views.logout, {'template_name': 'index.html'}, name="logout"),
     url(r'^registrar', iniviews.newUser, name = "registrar"),
+    url(r'^comprar', stviews.Comprar, name = "comprar"),
     url(r'^media/(?P<path>.*)$', serve, {'document_root':settings.MEDIA_ROOT}),
 ]
 

@@ -3,8 +3,6 @@ from django.template import RequestContext
 from inicio.forms import UserForm
 from django.contrib.auth.models import User
 from django.http.response import HttpResponseRedirect, HttpResponse
-from django.db import IntegrityError
-from django.contrib.auth.forms import UserCreationForm
 # Create your views here.
 
 def main(request):
