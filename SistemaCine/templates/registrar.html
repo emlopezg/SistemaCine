@@ -67,7 +67,37 @@
 					
 						<form action="{% url 'registrar' %}" method="post">
     					{% csrf_token %}
-    					{{ form.as_p }}
+    					<!--  
+    					<tr>	
+        					<input id="id_{{ form.username.name}}" class="form-control" name="{{form.username.name}}" placeholder="Usuario" required="" type="text"></input>
+   						</tr>
+   						<br><br>
+   						<tr>	
+        					<input id="id_{{form.password.name}}" class="form-control" name="{{form.password.name}}" placeholder="Password" required="" type="password"></input>
+   						</tr>
+   						<br><br>
+   						<tr>	
+        					<input id="id_{{ form.email.name}}" class="form-control" name="{{form.email.name}}" placeholder="Email" required="" type="text"></input>
+   						</tr>
+   						<br><br>
+   						<tr>	
+        					<input id="id_{{ form.first_name.name}}" class="form-control" name="{{form.first_name.name}}" placeholder="Nombre" required="" type="text"></input>
+   						</tr>
+   						<br><br>
+   						<tr>	
+        					<input id="id_{{ form.last_name.name}}" class="form-control" name="{{form.last_name.name}}" placeholder="Apellido" required="" type="text"></input>
+   						</tr>
+   						<br><br>
+   						<tr>	
+        					<input id="id_{{ form.RUC.id_ruc}}" class="form-control" name="{{form.RUC.id_ruc}}" placeholder="RUC" required="" type="text"></input>
+   						</tr>
+   						<br><br>
+   						<tr>	
+        					<input id="id_{{ form.cedula.id_cedula}}" class="form-control" name="{{form.cedula.id_cedula}}" placeholder="cedula" required="" type="text"></input>
+   						</tr>-->
+   						<br><br>
+   						
+    					{{ form.as_p}}
     					<br>
    	 					<input type="submit" value="Registrarse" />
 						</form>

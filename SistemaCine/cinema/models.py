@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from datetime import time, timedelta,date,datetime
 
 # Create your models here.
 
@@ -33,18 +34,40 @@ class Sala(models.Model):
     'unique': ("Ya existe una sala con ese codigo,ingrese otro codigo"),
     })
     tipo = models.CharField(max_length=8, choices = TIPO_CHOICES, default="2D")
-    filas = models.IntegerField()
-    columnas = models.IntegerField()
+    capacidad = models.IntegerField()
     def __unicode__(self):
         return self.codigo
 
 class Proyeccion(models.Model):
-    codigo = models.CharField(max_length=10, unique = True, error_messages={
+    '''Falta agregar:
+    - definir como cargar varios horarios. Capaz el horario puede generarse dependiendo de la duracion de la pelicula
+    - en dia elegir un dia entre fecha desde y fecha hasta'''
+    
+    '''codigo = models.CharField(max_length=10, unique = True, error_messages={
     'unique': ("Ya existe una proyeccion con ese codigo,ingrese otro codigo"),
-    })
+    })'''
+   
     pelicula = models.ForeignKey(Pelicula, on_delete = models.CASCADE)
+    desde = models.DateField()
+    hasta = models.DateField()
     sala = models.ForeignKey(Sala, on_delete = models.CASCADE)
-    horario = models.TimeField()
     
     def __unicode__(self):
         return self.codigo
+'''    
+    def save(self, *args, **kwargs): 
+        super(Proyeccion, self).save(*args, **kwargs) # Call the "real" save() method.
+        duracion = self.pelicula.duracion+30
+        horario = Horario()
+        horario.pelicula = Proyeccion
+        horario.horario = (time(13,0,0)).strftime("%H:%M:%S")
+        horario.save()
+        while(horario.horario<=time(0,0,0)):
+            horario = Horario()
+            horario.pelicula = Proyeccion
+            horario.horario = (horario.horario + timedelta(minutes=duracion)).strftime("%H:%M:%S")
+            horario.save()
+
+class Horario(models.Model):
+    pelicula = models.ForeignKey(Proyeccion)
+    horario = models.TimeField()'''

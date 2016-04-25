@@ -20,6 +20,7 @@ from inicio import views as iniviews
 from django.views.static import serve
 from stock import views as stviews
 from django.conf import settings
+from productos.views import ComboList
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -29,6 +30,7 @@ urlpatterns = [
     url(r'^logout$', views.logout, {'template_name': 'index.html'}, name="logout"),
     url(r'^registrar', iniviews.newUser, name = "registrar"),
     url(r'^comprar', stviews.Comprar, name = "comprar"),
+    #url(r'^booking/', include('booking.urls')),
     url(r'^media/(?P<path>.*)$', serve, {'document_root':settings.MEDIA_ROOT}),
 ]
 

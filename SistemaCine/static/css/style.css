@@ -3,9 +3,9 @@ article, aside, audio, canvas, command, datalist, details, embed, figcaption, fi
 mark, rp, rt, ruby, summary, time {display:inline}
 /* Global properties ======================================================== */
 html {width:100%}
-body {font-family:Arial, Helvetica, sans-serif;font-size:100%;color:#a1a1a1;min-width:960px;background:#000}
+body {font-family:Arial, Helvetica, sans-serif;font-size:100%;color:#a1a1a1;min-width:960px;background:url(../images/21399-red-stage-curtain-1920x1200-abstract-wallpaper.jpg);background-size:cover}
 .ic {border:0;float:right;background:#fff;color:#f00;width:50%;line-height:10px;font-size:10px;margin:-220% 0 0 0;overflow:hidden;padding:0}
-.bg-1 {width:100%; background:url(../images/bg-top.jpg) no-repeat center top; min-height:131px}
+.bg-1 {width:100%; min-height:131px}
 .bg-2 {width:100%; background:url(../images/bg-2-tail.gif) repeat center top; border-radius:3px}
 .main {
 	width:960px; 	
@@ -108,14 +108,14 @@ h1 a {
 .menu {
 	padding:10px 0 10px 0; 
 	width:100%;
-	height:40px;
+	height:60px;
 	overflow:hidden;
 }
 .menu li {
 	float:left; 
 	position:relative;
 	background:url(../images/menu-li-line.png) no-repeat left top;
-	padding:15px 33px 0 34px;
+	padding:30px 33px 0 34px;
 }
 .menu li.item {background:none; padding-left:46px}
 .menu li.item-1 {padding-right:34px; padding-left:39px}
@@ -135,17 +135,24 @@ h1 a {
 
 /********Slider********/
 .slider-wrapper {
-	width:960px;
+	width:1024px;
 	height:368px;
-	padding:0;
+	padding:0px;
 	background:none;
 	position:relative;
 	z-index:1;
 	padding:0;
 }
 .slider {
-	width:960px;
+	width:700px;
 	height:368px;
+	float: left;
+}
+
+.compra {
+	width: 1024px;
+	height:368px;
+	float:left;	
 }
 
 .items {

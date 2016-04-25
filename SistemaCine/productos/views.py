@@ -1,12 +1,7 @@
 from django.shortcuts import render
-
+from productos.models import Combo
 # Create your views here.
+from django.views.generic import TemplateView,ListView
 
-TAMANHO_BEBIDA = 750
-TAMANHO_PORORO_MEDIANO = 500
-TAMANHO_PORORO_GRANDE = 700
-'''
-def refreshStock(articulo, cantidad):
-    if(cantidad):
-        descontar = cantidad*
-    pass'''
+class ComboList(ListView):
+    model = Combo

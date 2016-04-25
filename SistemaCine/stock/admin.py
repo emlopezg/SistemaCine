@@ -1,6 +1,10 @@
 from django.contrib import admin
-from models import Proveedor
+from stock.models import OrdenDeCompra
 
 # Register your models here.
-   
-admin.site.register(Proveedor)
+
+class OrdenDeCompraAdmin(admin.ModelAdmin):
+    list_display = ('producto','proveedor', 'cantidad_producto','aprobado','estado')
+
+
+admin.site.register(OrdenDeCompra,OrdenDeCompraAdmin)

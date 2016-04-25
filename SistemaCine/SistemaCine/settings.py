@@ -32,7 +32,12 @@ SECRET_KEY = 'vf!q3))c#q3o9tw)^3x3t#i@br+7gmybvfm!24=iov&exr+w9('
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+#Configuracion de correo electronico
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'gestionproyecto777'
+EMAIL_HOST_PASSWORD = 'gestion777'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
 
 # Application definition
 
@@ -47,6 +52,7 @@ INSTALLED_APPS = [
     'cinema',
     'stock',
     'productos',
+    #'booking',
 ]
 
 MIDDLEWARE_CLASSES = [
