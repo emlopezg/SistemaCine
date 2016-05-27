@@ -11,6 +11,13 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
+            name='Horario',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('horario', models.TimeField()),
+            ],
+        ),
+        migrations.CreateModel(
             name='Pelicula',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
@@ -26,10 +33,14 @@ class Migration(migrations.Migration):
             name='Proyeccion',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('codigo', models.CharField(unique=True, max_length=10, error_messages={'unique': 'Ya existe una proyeccion con ese codigo,ingrese otro codigo'})),
-                ('horario', models.TimeField()),
+                ('desde', models.DateField()),
+                ('hasta', models.DateField()),
                 ('pelicula', models.ForeignKey(to='cinema.Pelicula')),
             ],
+            options={
+                'verbose_name': 'Proyeccion',
+                'verbose_name_plural': 'Proyecciones',
+            },
         ),
         migrations.CreateModel(
             name='Sala',

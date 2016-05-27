@@ -5,68 +5,15 @@ from stock.forms import CompraForm
 from datetime import date, datetime
 from productos.models import Combo, ProductoFinal, Producto
 from stock.models import OrdenDeCompra
+from cinema.models import Proyeccion, Pelicula, Sala
+from stock.models import ReservaAsiento, Asiento
+from django.contrib.auth.models import User
 # Create your views here.
-
-def refreshStock(combo):
-    '''A este metodo se le envia el id del combo, para que recupere el combo y
-    descuente del stock la cantidad necesario por cada articulo
-    -recuperar combo
-    -recuperar productos finales
-    -recuperar producto'''
-    
-    #combo = Combo.objects.get(id=combo) #se recupera el combo
-    #lista de productos finales en combo
-    for i in combo.productofinal.all():
-        #productofinal = ProductoFinal.objects.get(id.)
-        producto = Producto.objects.get(id =i.producto_id) #es producto id porque hace referencia a un number, no a un objetos
-        if(producto.categoria == 'BEBIDA'):
-            totalrestar = combo.cant_bebida*(i.volumen/float(1000))
-            #print(productofinal,totalrestar)
-        else:
-            if(producto.categoria == "COMESTIBLE"):
-                totalrestar = combo.cant_comestible*(i.volumen/float(1000))
-                #print(productofinal,totalrestar)
-                if(i.descripcion.find('pororo')):
-                    pfs = Producto.objects.get(codigo = 'Prod3')
-                    pfs.stock = pfs.stock - (20/float(1000))
-                    pfs.save()
-                    controlarStock(pfs.id)
-                    pfa = Producto.objects.get(codigo = 'Prod4')
-                    pfa.stock = pfa.stock - (100/float(1000))
-                    pfa.save()
-                    controlarStock(pfa.id)
-        producto.stock = producto.stock - totalrestar
-        producto.save()
-        controlarStock(producto.id)  
-    #lista de productos de un combo
-    for i in combo.producto.all():
-        producto = Producto.objects.get(id = i.id)
-        if (producto.categoria == 'INSBEBIDA'):
-            producto.stock = producto.stock - combo.cant_bebida
-        else:
-            if (producto.categoria == 'INSCOMESTIBLE'):
-                producto.stock = producto.stock - combo.cant_comestible
-            else:
-                producto.stock = producto.stock - combo.cant_golosina
-        
-        producto.save()
-        controlarStock(producto.id)
-
-def controlarStock(producto):
-    p = Producto.objects.get(id = producto)
-    if (p.stock <= 10):
-        generarOrdenDeCompra(p.id)
-
-def generarOrdenDeCompra(producto):
-    p = Producto.objects.get(id = producto)
-    ordencompra = OrdenDeCompra()
-    ordencompra.fecha = datetime.now()
-    ordencompra.producto = p
-    ordencompra.proveedor = p.proveedor
-    ordencompra.aprobado = False
-    ordencompra.estado = False
-    ordencompra.save()
-    
+PRECIO_ADULTOS_3D = 40000
+PRECIO_ADULTOS_2D = 30000
+PRECIO_NINHOS_3D = 30000
+PRECIO_NINHOS_2D = 20000 
+   
     #from stock.models import Producto
     #if(Producto.objects.count()):
     #no = Producto.objects.count()
@@ -74,45 +21,45 @@ def generarOrdenDeCompra(producto):
         #return 3
         #else:
         #    return no + 1
-
-
-    
-def Comprar(request,):
-    fecha = date.today()
-    #user = co
+ 
+def Reserva(request,):
+    print("Llego hasta aca")
     if request.method == 'POST':
+        print ("llego hasta reques.method post")
         form = CompraForm(request.POST)
         if form.is_valid():
+            print ("llego hasta form.is valid")
             combo = form.cleaned_data['combo']
-            #pelicula = form.cleaned_data['pelicula']
-            ''' venta = Venta.objects.create()
-            venta.fecha = fecha
-            venta.usuario = 'admin'
-            #venta.ticket = 'proy'+fecha+
-            venta.combo = combo.id
-            venta.total = combo.precio
-            venta.save()'''
-            refreshStock(combo);
+            pelicula = form.cleaned_data['pelicula']
+            cantidadmenores = form.cleaned_data['cantidadmenores']
+            cantidadmayores = form.cleaned_data['cantidadmayores']
+            hora = form.cleaned_data['hora']
+            fecha = form.cleaned_data['fecha']
+            asientos = form.cleaned_data['asientos_reservados']
+                  
+            reserva = ReservaAsiento()
+            reserva.fechareserva = date.today()
+            reserva.usuario = User.objects.get(username = request.user.username)
+            reserva.horario = hora
+            reserva.proyeccion = Proyeccion.objects.get(pelicula = Pelicula.objects.get(nombre = pelicula))
+            reserva.fechafuncion = fecha
+            reserva.cantidad_menor = cantidadmenores;
+            reserva.cantidad_mayor = cantidadmayores;
+            sala = Sala.objects.get(id = reserva.proyeccion.sala.id)
+            if (sala.tipo == '3D'):
+                reserva.totalentrada = (cantidadmayores*PRECIO_ADULTOS_3D) + (cantidadmenores*PRECIO_NINHOS_3D)
+            else:
+                reserva.totalentrada = (cantidadmayores*PRECIO_ADULTOS_2D) + (cantidadmenores*PRECIO_NINHOS_2D)
+            reserva.asientos = asientos;
+            reserva.combo = combo
+            reserva.totalcombo = combo.precio
+            reserva.total = reserva.totalcombo + reserva.totalentrada
+            reserva.pagado = False
+            reserva.save()
+            #reserva.combo.add(combo)
+            
             return HttpResponseRedirect('/main')          
     else:
         data = {}
         form = CompraForm(data)
-    return render_to_response("comprar.html", { 'form' : form  },context_instance=RequestContext(request))
-    '''if request.method == 'POST':
-        form = UserForm(request.POST)
-        if form.is_valid():
-            username = form.cleaned_data['username']
-            password= form.cleaned_data['password']
-            email = form.cleaned_data['email']
-            nombre = form.cleaned_data['first_name']
-            apellido = form.cleaned_data['last_name']
-            user= User.objects.create_user(username, email, password)
-            user.first_name = nombre
-            user.last_name = apellido
-            user.save()
-            return HttpResponseRedirect('/login')
-    else:
-        data = {}
-        form= UserForm(data)
-        
-    return render_to_response("registrar.html", { 'form' : form  },context_instance=RequestContext(request))'''
+    return render_to_response("compra.html", { 'form' : form  },context_instance=RequestContext(request))

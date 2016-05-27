@@ -1,344 +1,191 @@
+<!--
+Author: W3layouts
+Author URL: http://w3layouts.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+-->
 <!DOCTYPE html>
-<html lang="en">
-	<head>
-		<title></title>
-		<meta charset="utf-8">
-		<link rel="stylesheet" href="../static/css/reset.css" type="text/css" media="screen">
-		<link rel="stylesheet" href="../static/css/style.css" type="text/css" media="screen">
-		<link rel="stylesheet" href="../static/css/grid.css" type="text/css" media="screen">
-		<link rel="stylesheet" href="../static/css/prettyPhoto.css" type="text/css" media="screen">   
-		<script src="static/js/jquery-1.6.3.min.js" type="text/javascript"></script>
-		<script src="static/js/cufon-yui.js" type="text/javascript"></script>
-		<script src="static/js/cufon-replace.js" type="text/javascript"></script>
-		<script src="static/js/Vegur_700.font.js" type="text/javascript"></script>
-		<script src="static/js/Vegur_400.font.js" type="text/javascript"></script> 
-		<script src="static/js/FF-cash.js" type="text/javascript"></script> 
-		<script src="static/js/script.js" type="text/javascript"></script>
-		<script type="text/javascript" src="static/js/easyTooltip.js"></script>
-		<script src="static/js/jquery.easing.1.3.js" type="text/javascript"></script>
-		<script src="static/js/hover-image.js" type="text/javascript"></script>
-		<script src="static/js/jquery.prettyPhoto.js" type="text/javascript"></script>
-		<script src="static/js/jquery.easing.1.3.js" type="text/javascript"></script>
-		<script type="text/javascript" src="static/js/tms-0.3.js"></script>
-		<script type="text/javascript" src="static/js/tms_presets.js"></script>
-		<script type="text/javascript">
-			$(window).load(function(){
-				$('.slider')._TMS({
-					duration:800,
-					easing:'easeOutQuad',
-					preset:'diagonalFade',
-					pagination:false,
-					slideshow:6000,
-					banners:false,
-					waitBannerAnimation:false,
-					pauseOnHover:true
-				});
-				$("a[data-gal^='prettyVideo']").prettyPhoto({animation_speed:'normal',theme:'facebook',slideshow:false, autoplay_slideshow: false});
-			}); 
-		</script>		
-		<!--[if lt IE 7]>
-			<div style=' clear: both; text-align:center; position: relative;'>
-				<a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
-					<img src="http://storage.ie6countdown.com/assets/100/images/banners/warning_bar_0000_us.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today." />
-				</a>
+<html>
+<head>
+<title>.:Inicio:. | Villamorra Cinecenter</title>
+<link href="static/css/bootstrap.css" rel='stylesheet' type='text/css' />
+<!-- Custom Theme files -->
+<link href="static/css/style.css" rel="stylesheet" type="text/css" media="all" />
+<!-- Custom Theme files -->
+<script src="static/js/jquery.min.js"></script>
+<!-- Custom Theme files -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="Cinema Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template, 
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+<!--webfont-->
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+</head>
+<body>
+	<!-- header-section-starts -->
+	<div class="full">
+			<div class="menu">
+				<ul>
+					<li><a class="active" href="index.html"><i class="home"></i></a></li>
+					<li><a href="videos.html"><div class="video"><i class="videos"></i><i class="videos1"></i></div></a></li>
+					<li><a href="reviews.html"><div class="cat"><i class="watching"></i><i class="watching1"></i></div></a></li>
+					{% if user.is_authenticated %}
+                    	<li><a href="/compra"><div class="bk"><i class="booking"></i><i class="booking1"></i></div></a></li>
+                    {% endif %}
+					<li><a href="contact.html"><div class="cnt"><i class="contact"></i><i class="contact1"></i></div></a></li>
+				</ul>
 			</div>
-		<![endif]-->
-		<!--[if lt IE 9]>
-			<script type="text/javascript" src="static/js/html5.js"></script>
-			<link rel="stylesheet" href="css/ie.css" type="text/css" media="screen">
-		<![endif]-->
-           <style>
-      /* NOTE: The styles were added inline because Prefixfree needs access to your styles and they must be inlined if they are on local disk! */
-      @import url(http://fonts.googleapis.com/css?family=Open+Sans);
-	.btn { display: inline-block; *display: inline; *zoom: 1; padding: 4px 10px 4px; margin-bottom: 0; font-size: 13px; line-height: 18px; color: #333333; text-align: center;text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75); vertical-align: middle; background-color: #f5f5f5; background-image: -moz-linear-gradient(top, #ffffff, #e6e6e6); background-image: -ms-linear-gradient(top, #ffffff, #e6e6e6); background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#e6e6e6)); background-image: -webkit-linear-gradient(top, #ffffff, #e6e6e6); background-image: -o-linear-gradient(top, #ffffff, #e6e6e6); background-image: linear-gradient(top, #ffffff, #e6e6e6); background-repeat: repeat-x; filter: progid:dximagetransform.microsoft.gradient(startColorstr=#ffffff, endColorstr=#e6e6e6, GradientType=0); border-color: #e6e6e6 #e6e6e6 #e6e6e6; border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25); border: 1px solid #e6e6e6; -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px; -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05); -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05); cursor: pointer; *margin-left: .3em; }
-	.btn:hover, .btn:active, .btn.active, .btn.disabled, .btn[disabled] { background-color: #e6e6e6; }
-	.btn-large { padding: 9px 14px; font-size: 15px; line-height: normal; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; }
-	.btn:hover { color: #333333; text-decoration: none; background-color: #e6e6e6; background-position: 0 -15px; -webkit-transition: background-position 0.1s linear; -moz-transition: background-position 0.1s linear; -ms-transition: background-position 0.1s linear; -o-transition: background-position 0.1s linear; transition: background-position 0.1s linear; }
-	.btn-primary, .btn-primary:hover { text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25); color: #ffffff; }
-	.btn-primary.active { color: rgba(255, 255, 255, 0.75); }
-	.btn-primary { background-color: #4a77d4; background-image: -moz-linear-gradient(top, #6eb6de, #4a77d4); background-image: -ms-linear-gradient(top, #6eb6de, #4a77d4); background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#6eb6de), to(#4a77d4)); background-image: -webkit-linear-gradient(top, #6eb6de, #4a77d4); background-image: -o-linear-gradient(top, #6eb6de, #4a77d4); background-image: linear-gradient(top, #6eb6de, #4a77d4); background-repeat: repeat-x; filter: progid:dximagetransform.microsoft.gradient(startColorstr=#6eb6de, endColorstr=#4a77d4, GradientType=0);  border: 1px solid #3762bc; text-shadow: 1px 1px 1px rgba(0,0,0,0.4); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.5); }
-	.btn-primary:hover, .btn-primary:active, .btn-primary.active, .btn-primary.disabled, .btn-primary[disabled] { filter: none; background-color: #4a77d4; }
-	.btn-block { width: 70%; display:block; }
-	
-	.venta_menu { 
-		font-family: 'Open Sans', sans-serif;
-		background: #092756;
-		background: -moz-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%),-moz-linear-gradient(top,  rgba(57,173,219,.25) 0%, rgba(42,60,87,.4) 100%), -moz-linear-gradient(-45deg,  #670d10 0%, #092756 100%);
-		background: -webkit-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%), -webkit-linear-gradient(top,  rgba(57,173,219,.25) 0%,rgba(42,60,87,.4) 100%), -webkit-linear-gradient(-45deg,  #670d10 0%,#092756 100%);
-		background: -o-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%), -o-linear-gradient(top,  rgba(57,173,219,.25) 0%,rgba(42,60,87,.4) 100%), -o-linear-gradient(-45deg,  #670d10 0%,#092756 100%);
-		background: -ms-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%), -ms-linear-gradient(top,  rgba(57,173,219,.25) 0%,rgba(42,60,87,.4) 100%), -ms-linear-gradient(-45deg,  #670d10 0%,#092756 100%);
-		background: -webkit-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%), linear-gradient(to bottom,  rgba(57,173,219,.25) 0%,rgba(42,60,87,.4) 100%), linear-gradient(135deg,  #670d10 0%,#092756 100%);
-		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3E1D6D', endColorstr='#092756',GradientType=1 );
-	}
-	.venta_menu { 
-		width:250px;
-		height:367px;
-		float:left;
-		border: 
-		border: 1px solid rgba(0,0,0,0.3);
-		margin-left:10px;
-	}
-	.venta_menu h1 { color: #fff; text-shadow: 0 0 10px rgba(0,0,0,0.3); letter-spacing:1px; text-align:center; }
-	
-	input, select { 
-		width: 70%; 
-		margin-bottom: 10px; 
-		background: rgba(0,0,0,0.3);
-		border: none;
-		outline: none;
-		padding: 10px;
-		font-size: 13px;
-		color: #fff;
-		text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
-		border: 1px solid rgba(0,0,0,0.3);
-		border-radius: 4px;
-		box-shadow: inset 0 -5px 45px rgba(100,100,100,0.2), 0 1px 1px rgba(255,255,255,0.2);
-		-webkit-transition: box-shadow .5s ease;
-		-moz-transition: box-shadow .5s ease;
-		-o-transition: box-shadow .5s ease;
-		-ms-transition: box-shadow .5s ease;
-		transition: box-shadow .5s ease;
-	}
-	input, select:focus { box-shadow: inset 0 -5px 45px rgba(100,100,100,0.4), 0 1px 1px rgba(255,255,255,0.2); }
-
-    </style>
-                
-	</head>
-	<body id="page1">
-		<div class="extra">
-<!--==============================header=================================-->
-			<header>
-				<div class="main">
-					<div class="bg-1">
-						<h1><a href="index.html">VM Theater</a></h1>
-					</div>
-					<nav>
-						<div class="menu-bg-tail">
-							<div class="menu-bg">
-								<div class="container_12">
-									<div class="grid_12">
-										<ul class="menu">
-          	{% if user.is_authenticated %}
-	          			<li><a href="/logout">Cerrar Sesion</a></li>
-          	{% else %}
-          		<li class=""><a href="/loginuser">Ingresar</a></li>
-          	{% endif %}
-											{% if user.is_authenticated %}
-												{% if user.is_superuser %}
-													<li class="item"><a class="active" href="admin/auth/user/">Usuarios</a></li>											
-													<li><a href="admin/cinema/">Cinema</a></li>
-													<li><a href="admin/stock/">Stock</a></li>
-													<li class="item-1"><a href="admin/stock/proveedor/">Proveedores</a></li>
-													<li class="last"><a href="contacts.html">CandyBar</a></li> 
-												{% else %}
-													<li class="last"><a href="contacts.html">Comprar Entradas</a></li>
-												{% endif %}	
-											{% endif %}
-										</ul>
-										<div class="clear"></div>
-									</div>
-									<div class="clear"></div>
-								</div>
-							</div>
-						</div>
-					</nav>
-					<div class="slider-wrapper">
-						<div class="slider">
-							<ul class="items">
-								<li><img src="../static/images/slider-img1.jpg" alt="" /></li>
-								<li>
-									<img src="../static/images/slider-img2.jpg" alt="" />
-								</li>
-								<li>
-									<img src="../static/images/slider-img3.jpg" alt="" />
-								</li>
-							</ul> 
-						</div>
-                        <div class="venta_menu" align="center">
-                            <p><img src="static/images/ticketera.jpg"></img></p>
-                            <form method="post">
-                            	<select name="cars" placeholder="Pelicula">
-                                    <option value="volvo">Volvo</option>
-                                    <option value="saab">Saab</option>
-                                    <option value="fiat">Fiat</option>
-                                	<option value="audi">Audi</option>
-                                </select>
-                                <select name="cars">
-                                    <option value="volvo">Volvo</option>
-                                    <option value="saab">Saab</option>
-                                    <option value="fiat">Fiat</option>
-                                	<option value="audi">Audi</option>
-                                </select>
-                                <select name="cars">
-                                    <option value="volvo">Volvo</option>
-                                    <option value="saab">Saab</option>
-                                    <option value="fiat">Fiat</option>
-                                	<option value="audi">Audi</option>
-                                </select>
-                                <!-- <input type="text" name="u" placeholder="Username" required /> <br/><br/> -->
-                                <br><br>
-                            	{% if user.is_authenticated %}
-                            		<button type="submit" class="btn btn-primary btn-block btn-large"><img src="static/images/estrella.png"></img>&nbsp;&nbsp;COMPRAR&nbsp;&nbsp;<img src="../static/images/estrella.png"></img></button>
-                            	{% else %}
-									<button type="submit" class="btn btn-primary btn-block btn-large"><a href="/loginuser">Ingresar para comprar</button>
-								{% endif %}	
-                        	</form>
-                        </div>
-                        
-					</div>
+		<div class="main">
+		<div class="header">
+			<div class="top-header">
+				<div class="logo">
+					<a href="index.html"><img src="static/images/logo.png" alt="" /></a>
 				</div>
-			</header>
-<!--==============================content================================-->
-		{% if user.is_authenticated %}
-			<section id="content"><div class="ic">More Website Templates @ TemplateMonster.com. November 21, 2011!</div>
-				<div class="main">
-					<div class="bg-2">
-						<div class="content-padding-1">
-							<div class="container_12">
-								<div class="wrapper">
-									<article class="grid_4">
-										<div class="padding-grid-1">
-											<h3 class="letter"> Bienvenido <strong>{{ user.get_full_name}}</strong></h3>
-											<!-- <div class="wrapper img-indent-bot1">
-												<time class="time time-stule-1" datetime="2011-11-09"> <strong class="text-1">09</strong><strong class="text-2">nov</strong></time>
-												<div class="extra-wrap">
-													<div class="indent-top">
-														Rock Band is one of <a class="link" target="_blank" href="http://blog.templatemonster.com/free-website-templates/">free website templates</a> created by Template Monster team.
-													</div>
-												</div>
-											</div>
-											<div class="wrapper img-indent-bot1">
-												<time class="time time-stule-1" datetime="2011-11-07"> <strong class="text-1">07</strong><strong class="text-2">nov</strong></time>
-												<div class="extra-wrap">
-													<div class="indent-top">
-														This <a class="link" href="http://blog.templatemonster.com/2011/11/21/free-website-template-jquery-gallery-music/" target="_blank" rel="nofollow">Rock Band Template</a> goes with two packages – with PSD source files and without them.
-													</div>
-												</div>
-											</div>
-											<div class="wrapper">
-												<time class="time time-stule-1" datetime="2011-11-02"> <strong class="text-1">02</strong><strong class="text-2">nov</strong></time>
-												<div class="extra-wrap">
-													<div class="indent-top">
-														PSD source files are available for free for the registered members <br />of Templates.com.
-													</div>
-												</div>
-											</div>
-										</div>
-									</article>
-									<article class="grid_4 alpha">
-										<div class="padding-grid-1">
-											<h3>Tour <strong>Dates</strong></h3>
-											<div class="wrapper img-indent-bot2">
-												<time class="time time-stule-2" datetime="2011-11-09"> <strong class="text-3">09</strong><strong class="text-4">nov</strong></time>
-												<div class="extra-wrap">
-													<h4 class="indent-top"><a href="#">New York</a></h4>
-													Lorem ipsum dolor consctetur 
-												</div>
-											</div>
-											<div class="wrapper img-indent-bot2">
-												<time class="time time-stule-2" datetime="2011-11-05"> <strong class="text-3">05</strong><strong class="text-4">nov</strong></time>
-												<div class="extra-wrap">
-													<h4 class="indent-top"><a href="#">Los Angeles</a></h4>
-													Adipisicing elitdo esmod tempor
-												</div>
-											</div>
-											<div class="wrapper">
-												<time class="time time-stule-2" datetime="2011-11-01"> <strong class="text-3">01</strong><strong class="text-4">nov</strong></time>
-												<div class="extra-wrap">
-													<h4 class="indent-top"><a href="#">San Diego</a></h4>
-													Lorem ipsum dolor consctetur 
-												</div>
-											</div>
-										</div>
-									</article>
-									<article class="grid_4 alpha">
-										<div class="padding-grid-2">
-											<h3 class="letter">In Stores <strong>Now!</strong></h3>
-											<div class="wrapper">
-												<figure class="style-img fleft"><a href="#"><img src="static/images/page1-img1.jpg"  alt=""></a></figure>
-											</div> -->
-										</div>
-									</article>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- <div class="content-padding-2">
-						<div class="container_12">
-							<div class="wrapper">
-								<article class="grid_4">
-									<div class="padding-grid-1">
-										<h3>Upcoming <strong>Events</strong></h3>
-										<div class="wrapper img-indent-bot1">
-											<time class="time time-stule-3" datetime="2011-11-09"> <strong class="text-5">09</strong><strong class="text-6">nov</strong></time>
-											<div class="extra-wrap">
-												<div class="indent-top">
-													Lorem ipsum dolor consctetur adipisicing elitdo eusmod tempor incididunt ut labore.
-												</div>
-											</div>
-										</div>
-										<div class="wrapper">
-											<time class="time time-stule-3" datetime="2011-11-03"> <strong class="text-5">03</strong><strong class="text-6">nov</strong></time>
-											<div class="extra-wrap">
-												<div class="indent-top">
-													Lorem ipsum dolor consctetur adipisicing elitdo eusmod tempor incididunt ut labore.
-												</div>
-											</div>
-										</div>
-									</div>
-								</article>
-								<article class="grid_4 alpha">
-									<div class="padding-grid-2">
-										<h3 class="letter">Latest <strong>Video</strong></h3>
-										
-										<div class="wrapper">
-											<figure class="style-img-2 fleft"><a class="lightbox-image" href="video/video_AS3.swf?width=495&amp;height=275&amp;fileVideo=intro06.flv" data-gal="prettyVideo[prettyVideo]"><img src="static/images/page1-img2.jpg"  alt=""></a></figure>
-										</div>
-									</div>
-								</article>
-								<article class="grid_4 alpha">
-									<div class="padding-grid-2">
-										<h3 class="letter prev-indent-bot1">Shortly <strong>About</strong></h3>
-										<h6>Sed ut perspiciatis unde omnis</h6>
-										Iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas aspernatur.
-									</div>
-								</article>
-							</div>
-						</div>
-					</div> -->
+				<!-- <a class="book" href="#"><i class="book1"></i>RESERVAR</a> -->
+				<div class="search">
+					
+				    <form>
+						<input type="text" value="Buscar.." onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Buscar..';}"/>
+						<input type="submit" value="">
+					</form> 
 				</div>
-				<div class="block"></div>
-			</section>
+				<div class="clearfix">
+                {% if user.is_authenticated %}
+                	<a class="book2" href="/logout"><i class="book1"></i>Cerrar Sesion</a>
+                {% else %}
+                	<a class="book2" href="/login"><i class="book1"></i>Iniciar Sesion</a>
+                {% endif %}
+                </div>
+			</div>
+			<div class="header-info">
+				<h1>BIG HERO 6</h1>
+				<p class="age"><a href="#">Todo Público</a> Don Hall, Chris Williams</p>
+				<p class="review">Ranking:	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: &nbsp;&nbsp;  8,5/10</p>
+				<p class="review reviewgo">Género:	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : &nbsp;&nbsp; Animacion, Accion, Comedia</p>
+				<p class="review">Estreno: &nbsp;&nbsp;&nbsp;&nbsp;: &nbsp;&nbsp; 11 Mayo 2016</p>
+				<p class="special">El enlace especial que se desarrolla entre el robot BayMax y el niño prodigio Hiro Hamada, que se juntan para formar un grupo de superhéroes de tecnología</p>
+				<a class="video" href="#"><i class="video1"></i>VER TRAILER</a>
+                {% if user.is_authenticated %}
+					<a class="book" href="/compra"><i class="book1"></i>RESERVAR</a>
+                {% endif %}
+			</div>
 		</div>
-	{% endif %}
-<!--==============================footer=================================-->
-		<footer>
-			<div class="main">
-				<div class="footer-bg">
-					<div class="container_12">
-						<div class="wrapper">
-							<div class="grid_12">
-								<div class="footer-padding">
-									<div class="wrapper">
-										<span class="footer-link">
-										<span>Shopping Villa Morra</span>
-										<span>Av. Mcal. Lopez y Charles de Gaulle</span> 
-										Tel. +595 21 610032</span>
-										<ul class="list-services">
-											<li><a class="tooltips n-1" title="Twitter" href="#"></a></li>
-											<li><a class="tooltips n-2" title="Facebook" href="#"></a></li>
-											<li class="last"><a class="tooltips n-3" title="Youtube" href="#"></a></li>
-										</ul>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
+		<div class="review-slider">
+			 <ul id="flexiselDemo1">
+			<li><img src="static/images/r1.jpg" alt=""/></li>
+			<li><img src="static/images/r2.jpg" alt=""/></li>
+			<li><img src="static/images/r3.jpg" alt=""/></li>
+			<li><img src="static/images/r4.jpg" alt=""/></li>
+			<li><img src="static/images/r5.jpg" alt=""/></li>
+			<li><img src="static/images/r6.jpg" alt=""/></li>
+		</ul>
+			<script type="text/javascript">
+		$(window).load(function() {
+			
+		  $("#flexiselDemo1").flexisel({
+				visibleItems: 6,
+				animationSpeed: 1000,
+				autoPlay: true,
+				autoPlaySpeed: 3000,    		
+				pauseOnHover: false,
+				enableResponsiveBreakpoints: true,
+				responsiveBreakpoints: { 
+					portrait: { 
+						changePoint:480,
+						visibleItems: 2
+					}, 
+					landscape: { 
+						changePoint:640,
+						visibleItems: 3
+					},
+					tablet: { 
+						changePoint:768,
+						visibleItems: 4
+					}
+				}
+			});
+			});
+		</script>
+		<script type="text/javascript" src="static/js/jquery.flexisel.js"></script>	
+		</div>
+		<div class="video">
+			<iframe  src="https://www.youtube.com/embed/2LqzF5WauAw" frameborder="0" allowfullscreen></iframe>
+		</div>
+		<div class="news">
+			<div class="col-md-6 news-left-grid">
+				<h3>Don’t be late,</h3>
+				<h2>Book your ticket now!</h2>
+				<h4>Easy, simple & fast.</h4>
+				<a href="#"><i class="book"></i>BOOK TICKET</a>
+				<p>Get Discount up to <strong>10%</strong> if you are a member!</p>
 			</div>
-		</footer>
-		<script type="text/javascript"> Cufon.now(); </script>
-	</body>
+			<div class="col-md-6 news-right-grid">
+				<h3>News</h3>
+				<div class="news-grid">
+					<h5>Lorem Ipsum Dolor Sit Amet</h5>
+					<label>Nov 11 2014</label>
+					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.</p>
+				</div>
+				<div class="news-grid">
+					<h5>Lorem Ipsum Dolor Sit Amet</h5>
+					<label>Nov 11 2014</label>
+					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.</p>
+				</div>
+				<a class="more" href="#">MORE</a>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		<div class="more-reviews">
+			 <ul id="flexiselDemo2">
+			<li><img src="static/images/m1.jpg" alt=""/></li>
+			<li><img src="static/images/m2.jpg" alt=""/></li>
+			<li><img src="static/images/m3.jpg" alt=""/></li>
+			<li><img src="static/images/m4.jpg" alt=""/></li>
+		</ul>
+			<script type="text/javascript">
+		$(window).load(function() {
+			
+		  $("#flexiselDemo2").flexisel({
+				visibleItems: 4,
+				animationSpeed: 1000,
+				autoPlay: true,
+				autoPlaySpeed: 3000,    		
+				pauseOnHover: false,
+				enableResponsiveBreakpoints: true,
+				responsiveBreakpoints: { 
+					portrait: { 
+						changePoint:480,
+						visibleItems: 2
+					}, 
+					landscape: { 
+						changePoint:640,
+						visibleItems: 3
+					},
+					tablet: { 
+						changePoint:768,
+						visibleItems: 3
+					}
+				}
+			});
+			});
+		</script>
+		<script type="text/javascript" src="static/js/jquery.flexisel.js"></script>	
+		</div>
+		{% block content %}
+      {% endblock %}
+       {% block inicio %}
+      {% endblock %}
+	<div class="footer">
+		<h6>Disclaimer : </h6>
+		<p class="claim">This is a freebies and not an official website, I have no intention of disclose any movie, brand, news.My goal here is to train or excercise my skill and share this freebies.</p>
+		<a href="example@mail.com">example@mail.com</a>
+		<div class="copyright">
+			<p> Template by  <a href="http://w3layouts.com">  W3layouts</a></p>
+		</div>
+	</div>	
+	</div>
+	</div>
+	<div class="clearfix"></div>
+</body>
 </html>
-
-

@@ -14,7 +14,8 @@ class ProveedorAdmin(admin.ModelAdmin):
 
 class ComboAdmin(admin.ModelAdmin):
     list_display = ('codigo','descripcion','precio')
-
+    filter_horizontal = ('producto','productofinal')
+    
 admin.site.register(Producto, ProductoAdmin)
 admin.site.register(ProductoFinal, ProductoFinalAdmin)
 admin.site.register(Combo, ComboAdmin)

@@ -48,10 +48,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'jquery',
     'inicio',
     'cinema',
     'stock',
     'productos',
+    'bancos',
     #'booking',
 ]
 

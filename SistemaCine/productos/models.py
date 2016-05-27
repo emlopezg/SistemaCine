@@ -17,8 +17,11 @@ class Proveedor(models.Model):
     
     def __unicode__(self):
         return self.proveedor.encode('utf8')
-
     
+    class Meta:
+        verbose_name = ("Proveedor")
+        verbose_name_plural = ("Proveedores")
+
 class Producto(models.Model):
     '''Clase para registrar datos de productos. Algunos productos son materia prima
     para producir otro producto final'''
@@ -63,6 +66,12 @@ class ProductoFinal(models.Model):
     
     def __unicode__(self):
         return self.descripcion
+    
+    class Meta:
+        verbose_name = ("Producto Final")
+        verbose_name_plural = ("Productos Finales")
+        #ordering = ("user", "name")
+        #unique_together = ("user", "name")
 
 
 class Combo(models.Model):
@@ -72,7 +81,7 @@ class Combo(models.Model):
     codigo = models.CharField('Codigo del combo', max_length = 20)
     descripcion = models.TextField('Combo', max_length = 100, help_text='Introduce una descripcion del combo')
     productofinal = models.ManyToManyField(ProductoFinal)
-    producto = models.ManyToManyField(Producto)
+    producto = models.ManyToManyField(Producto,)
     imagen = models.FileField(upload_to= 'pelicula_pics', help_text = 'Sube una imagen ilustrativa de la pelicula')
     cant_bebida = models.IntegerField()
     cant_comestible = models.IntegerField()

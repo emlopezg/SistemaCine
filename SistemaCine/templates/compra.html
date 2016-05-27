@@ -1,0 +1,370 @@
+<!--
+Author: W3layouts
+Author URL: http://w3layouts.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+-->
+<!DOCTYPE html>
+<html>
+<head>
+<title>.:Compra:. | Villamorra Cinecenter</title>
+<link href="static/css/bootstrap.css" rel='stylesheet' type='text/css' />
+<!-- Custom Theme files -->
+<link href="static/css/style.css" rel="stylesheet" type="text/css" media="all" />
+<!-- Custom Theme files -->
+<script src="static/js/jquery.min.js"></script>
+<!-- Custom Theme files -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="Cinema Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template, 
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+<!--webfont-->
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+<link rel="canonical" href="http://techbrij.com/780/seat-reservation-with-jquery" />
+<!-- /all in one seo pack -->
+    <script src="static/jquery-1.4.1.min.js" type="text/javascript"></script>
+    <style type="text/css">
+	#holder{	
+	 height:200px;	 
+	 width:550px;
+	 background-color:#F5F5F5;
+	 border:1px solid #A4A4A4;
+	 margin-left:10px;	
+	}
+	 #place {
+	 position:relative;
+	 margin:7px;
+	 }
+     #place a{
+	 font-size:0.6em;
+	 }
+     #place li
+     {
+         list-style: none outside none;
+         position: absolute;   
+     }    
+     #place li:hover
+     {
+        background-color:yellow;      
+     } 
+	 #place .seat{
+	 background:url("static/images/azul.png") no-repeat scroll 0 0 transparent;
+	 height:33px;
+	 width:33px;
+	 display:block;	 
+	 }
+      #place .selectedSeat
+      { 
+		background-image:url("static/images/rojo.png");      	 
+      }
+	   #place .selectingSeat
+      { 
+		background-image:url("static/images/verde.png");      	 
+      }
+	  #place .row-3, #place .row-4{
+		margin-top:10px;
+	  }
+	  #seatDescription{
+	 	padding:0px;
+	  }
+	  #seatDescription li{
+		  verticle-align:middle;	  
+		  list-style: none outside none;
+		  padding-left:;
+		  height:35px;
+		  float:left;
+	  }
+    </style>
+	<!-- Google Analytics for WordPress | http://yoast.com/wordpress/google-analytics/ -->
+<script type="text/javascript">
+	window.google_analytics_uacct = "UA-12650627-1";
+</script>
+				
+	<script type="text/javascript">//<![CDATA[
+	// Google Analytics for WordPress by Yoast v4.0.10 | http://yoast.com/wordpress/google-analytics/
+	var _gaq = _gaq || [];
+	_gaq.push(['_setAccount','UA-12650627-1']);
+	_gaq.push(['_setDomainName','.techbrij.com'],['_setAllowHash',false],['_trackPageview']);
+	(function() {
+		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	})();
+	//]]></script>
+<!-- End of Google Analytics code -->
+
+</head>
+<body>
+	<!-- header-section-starts -->
+	<div class="full">
+			<div class="menu">
+				<ul>
+					<li><a href="main"><i class="home"></i></a></li>
+					<li><a href="videos.html"><div class="video"><i class="videos"></i><i class="videos1"></i></div></a></li>
+					<li><a href="reviews.html"><div class="cat"><i class="watching"></i><i class="watching1"></i></div></a></li>
+					<li><a class="active" href="compra"><div class="bk"><i class="booking"></i><i class="booking1"></i></div></a></li>
+					<li><a href="contact.html"><div class="cnt"><i class="contact"></i><i class="contact1"></i></div></a></li>
+				</ul>
+			</div>
+		<div class="main">
+		<div class="header-compra">
+			<div class="top-header">
+				<div class="logo">
+					<a href="index.html"><img src="static/images/logo.png" alt="" /></a>
+				</div>
+				<div class="search">
+					<form>
+						<input type="text" value="Search.." onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search..';}"/>
+						<input type="submit" value="">
+					</form>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+		</div>   
+		<p align="center" style="color: #383838;font-size: 3em; font-weight: 700;">Reserva tu Entrada Aquí!</p>
+        <p align="center" style="color: #b8b8b8;font-size: 2.2em;font-weight: 700;">Ahorrate la cola y paga tu entrada en caja!</p>
+		<!-- ESTE ES EL PRIMER FORM -->
+        <form method="post" id="formulario" action="{% url 'compra' %}">{% csrf_token %}
+		<div class="review-slider">
+        	<p align="center">Elije tu película: &nbsp;
+            	 <select id="id_{{ form.pelicula}}
+                    
+				</select><br/><br/>
+            </p>
+			<ul id="flexiselDemo1">
+                <li><img src="static/images/r1.jpg" alt=""/></li>
+                <li><img src="static/images/r2.jpg" alt=""/></li>
+                <li><img src="static/images/r3.jpg" alt=""/></li>
+                <li><img src="static/images/r4.jpg" alt=""/></li>
+                <li><img src="static/images/r5.jpg" alt=""/></li>
+                <li><img src="static/images/r6.jpg" alt=""/></li>
+			</ul>
+			<script type="text/javascript">
+		$(window).load(function() {
+			
+		  $("#flexiselDemo1").flexisel({
+				visibleItems: 6,
+				animationSpeed: 1000,
+				autoPlay: true,
+				autoPlaySpeed: 3000,    		
+				pauseOnHover: false,
+				enableResponsiveBreakpoints: true,
+				responsiveBreakpoints: { 
+					portrait: { 
+						changePoint:480,
+						visibleItems: 2
+					}, 
+					landscape: { 
+						changePoint:640,
+						visibleItems: 3
+					},
+					tablet: { 
+						changePoint:768,
+						visibleItems: 4
+					}
+				}
+			});
+			});
+		</script>
+		<script type="text/javascript" src="js/jquery.flexisel.js"></script>	
+		</div>
+		<div class="news">
+			<div class="col-md-6 news-left-grid">
+				<h3>Reserva para un día de la semana,</h3>
+				<h2>Tus funciones favoritas!</h2>
+				<h4>Inserta cuantos tickets quieres comprar</h4>
+                <p><label>Niños:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label><input value="0" id= "id_{{form.cantidadmenores}}
+                </p>
+                <p>
+                <label>Adultos:&nbsp;</label><input value="0" id= "id_{{form.cantidadmayores}}
+                
+                </p>
+                <!-- <p>Subtotal:</p> -->
+				<!-- <a href="#"><i class="book"></i>BOOK TICKET</a> -->
+			</div>
+			<div class="col-md-6 news-right-grid">
+				<h3>Día de la Función</h3>
+				<div class="news-grid">
+					<h5>Reservas sólo para la semana</h5>
+					<label>Elije una fecha:</label>
+					<p>
+            			<input type= "date" id= "id_{{form.fecha}}  <br/>
+                    </p><br/>
+                    <label>Elije un horario:</label>
+					<p>
+            			<select id = "id_{{form.hora}}
+                    	</select><br/>
+                    </p>
+				</div>
+				<div class="news-grid">
+					<h5>Elije tu Combo!</h5>
+					<p><select id="{{ form.combo}}
+					  </select></p>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="more-reviews">
+                    <ul id="flexiselDemo2">
+                        <li><img src="static/images/cbo1.jpg" alt=""/></li>
+                        <li><img src="static/images/cbo2.jpg" alt=""/></li>
+                        <li><img src="static/images/cbo3.jpg" alt=""/></li>
+                    </ul>
+                <script type="text/javascript">
+            $(window).load(function() {
+                
+              $("#flexiselDemo2").flexisel({
+                    visibleItems: 2,
+                    animationSpeed: 1000,
+                    autoPlay: true,
+                    autoPlaySpeed: 7000,    		
+                    pauseOnHover: false,
+                    enableResponsiveBreakpoints: true,
+                    responsiveBreakpoints: { 
+                        portrait: { 
+                            changePoint:480,
+                            visibleItems: 2
+                        }, 
+                        landscape: { 
+                            changePoint:640,
+                            visibleItems: 3
+                        },
+                        tablet: { 
+                            changePoint:768,
+                            visibleItems: 4
+                        }
+                    }
+                });
+                });
+            	</script>
+            	<script type="text/javascript" src="static/js/jquery.flexisel.js"></script>	
+			</div>	
+            <div class="news" align="center">
+                <p align="center" style="color: #b8b8b8;font-size: 2.2em;font-weight: 700;">Reserva tus asientos:</p>
+                
+                                <script type="text/javascript"><!--google_ad_client = "ca-pub-0617840233982627";/* 728x90, created 1/23/11 */
+                                    google_ad_slot = "0083621798";
+                                    google_ad_width = 728;
+                                    google_ad_height = 90;
+                                //-->
+                                </script>                         
+                                       <div id="holder"> 
+                                        <ul  id="place">
+                                        </ul>    
+                                    </div>
+                                     <div align="center" style="width:600px;text-align:center;overflow:auto"> 
+                                        <ul id="seatDescription">
+                                        	<p align="center"><img src="static/images/azul.png"/>Libres&nbsp;&nbsp;&nbsp;<img src="static/images/rojo.png"/>Ocupados&nbsp;&nbsp;&nbsp;<img src="static/images/verde.png"/>Seleccionados&nbsp;&nbsp&nbsp;</p>
+                                            <!--<li style="background:url('static/images/azul.png') no-repeat scroll 0 0 transparent;">Libres&nbsp;</li>
+                                            <li style="background:url('static/images/rojo.png') no-repeat scroll 0 0 transparent;">Ocupados&nbsp;</li>
+                                            <li style="background:url('static/images/verde.png') no-repeat scroll 0 0 transparent;"> Seleccionados&nbsp;</li>-->
+                                           
+                                        </ul>        
+                                     </div>
+                                   
+                                 
+                                    <div style="width:580px;text-align:left;margin:5px">	
+                                       <!--   <input type="button" id="btnShowNew" value="Show Selected Seats" /><input type="button" id="btnShow" value="Show All" />            </div>-->
+                                		
+                                		
+                                
+                                  
+                                    <script type="text/javascript">
+                                        $(function () {
+                                            var settings = {
+                                                rows: 5,
+                                                cols: 15,
+                                                rowCssPrefix: 'row-',
+                                                colCssPrefix: 'col-',
+                                                seatWidth: 35,
+                                                seatHeight: 35,
+                                                seatCss: 'seat',
+                                                selectedSeatCss: 'selectedSeat',
+                                                selectingSeatCss: 'selectingSeat'
+                                            };
+                                
+                                            var init = function (reservedSeat) {
+                                                var str = [], seatNo, className;
+                                                for (i = 0; i < settings.rows; i++) {
+                                                    for (j = 0; j < settings.cols; j++) {
+                                                        seatNo = (i + j * settings.rows + 1);
+                                                        className = settings.seatCss + ' ' + settings.rowCssPrefix + i.toString() + ' ' + settings.colCssPrefix + j.toString();
+                                                        if ($.isArray(reservedSeat) && $.inArray(seatNo, reservedSeat) != -1) {
+                                                            className += ' ' + settings.selectedSeatCss;
+                                                        }
+                                                        str.push('<li class="' + className + '"' +
+                                                                  'style="top:' + (i * settings.seatHeight).toString() + 'px;left:' + (j * settings.seatWidth).toString() + 'px">' +
+                                                                  '<a title="' + seatNo + '">' + seatNo + '</a>' +
+                                                                  '</li>');
+                                                    }
+                                                }
+                                                $('#place').html(str.join(''));
+                                            };
+                                
+                                            //case I: Show from starting
+                                            init();
+                                
+                                            //Case II: If already booked
+                                            //var bookedSeats = [5, 10, 25];
+                                            //init(bookedSeats);
+                                
+                                
+                                            $('.' + settings.seatCss).click(function () {
+                                            if ($(this).hasClass(settings.selectedSeatCss)){
+                                                alert('This seat is already reserved');
+                                            }
+                                            else{
+                                                $(this).toggleClass(settings.selectingSeatCss);
+												var str = [];
+                                                $.each($('#place li.' + settings.selectedSeatCss + ' a, #place li.'+ settings.		selectingSeatCss + ' a'), function (index, value) {
+                                                    str.push($(this).attr('title'));
+                                                });
+												$("#formulario [name=asientos_reservados]").val("");
+												$("#formulario [name=asientos_reservados]").val(str.join(','));
+                                                }
+                                            });
+                                
+                                            $('#btnShow').click(function () {
+                                                var str = [];
+                                                $.each($('#place li.' + settings.selectedSeatCss + ' a, #place li.'+ settings.selectingSeatCss + ' a'), function (index, value) {
+                                                    str.push($(this).attr('title'));
+                                                });
+												
+                                                alert(str.join(','));
+                                            })
+                                
+                                            $('#btnShowNew').click(function () {
+                                                var str = [], item;
+                                                $.each($('#place li.' + settings.selectingSeatCss + ' a'), function (index, value) {
+                                                    item = $(this).attr('title');                   
+                                                    str.push(item);                   
+                                                });
+                                                alert(str.join(','));
+                                            })
+                                        });
+                                    
+                                    </script>
+    		</div>
+                                
+                                
+                                
+        	<input type="hidden" value="12" name="asientos_reservados" id="id_{{form.asientos_reservados}}                    
+    	<input class="sbt" type="submit" value="Reservar"></button>     
+	<!--  <div class="footer">
+		<h6>Disclaimer : </h6>
+		<p class="claim">This is a freebies and not an official website, I have no intention of disclose any movie, brand, news.My goal here is to train or excercise my skill and share this freebies.</p>
+		<a href="example@mail.com">example@mail.com</a>
+		<div class="copyright">
+			<p> Template by  <a href="http://w3layouts.com">  W3layouts</a></p>
+		</div>-->
+	</div>
+	<!-- ESTE ES EL FINAL -->
+    </form>
+       
+		
+	</div>
+	</div>
+	<div class="clearfix"></div>
+</body>
+</html>

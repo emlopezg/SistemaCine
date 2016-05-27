@@ -13,7 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+from django.conf.urls import url, include
 from django.contrib import admin
 from django.contrib.auth import views
 from inicio import views as iniviews
@@ -29,7 +29,7 @@ urlpatterns = [
     url(r'^login', views.login, {'template_name': 'login.html'}, name="login"),
     url(r'^logout$', views.logout, {'template_name': 'index.html'}, name="logout"),
     url(r'^registrar', iniviews.newUser, name = "registrar"),
-    url(r'^comprar', stviews.Comprar, name = "comprar"),
+    url(r'^compra', stviews.Reserva, name = "compra"),
     #url(r'^booking/', include('booking.urls')),
     url(r'^media/(?P<path>.*)$', serve, {'document_root':settings.MEDIA_ROOT}),
 ]
