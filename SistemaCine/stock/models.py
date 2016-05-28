@@ -6,7 +6,7 @@ from productos.models import Combo, Proveedor, Producto
 from cinema.models import Proyeccion, Horario, Pelicula
 from django.core.mail.message import EmailMessage
 from bancos.models import Cheque
-from datetime import date, datetime
+from datetime import date
 
 # Create your models here.
 
@@ -31,16 +31,16 @@ class OrdenDeCompra(models.Model):
     fecha = models.DateField()
     producto = models.ForeignKey(Producto,)
     proveedor = models.ForeignKey(Proveedor,)
-    cantidad_producto = models.IntegerField(default = 0)
+    cantidad_producto = models.IntegerField('Cantidad pedida',default = 0)
     medida = models.CharField(max_length =20,choices = MEDIDA_CHOICES,)
-    total = models.IntegerField(help_text='Total a pagar al proveedor', blank = True)
+    total = models.IntegerField(help_text='Total a pagar al proveedor', null = True, blank = True)
     aprobado = models.BooleanField(help_text="Si aprueba la orden de compra, se enviara la orden al proveedor")
-    cantidadrecibida = models.IntegerField('Cantidad de producto recibida', null = True, blank = True)
+    cantidadrecibida = models.IntegerField('Cantidad de producto recibida', default = 0, null = True, blank = True)
     fecharecepcion = models.DateField('Fecha de Recepcion', null = True, blank = True)
     fechaemision = models.DateField('Fecha de emision',null = True, blank = True)
     factura = models.CharField('Numero de Factura',max_length =20, null = True, blank = True)
     tipopago = models.CharField(max_length =20,choices = TIPOPAGO_CHOICES, blank = True)
-    diapago = models.IntegerField(choices = DIA_CHOICES, default = 1, blank = True)
+    diapago = models.IntegerField(choices = DIA_CHOICES, null = True, blank = True)
     meses = models.IntegerField(null = True, blank = True)
     #en save verificar que el total recibido. Si es igual al total pedido, marcar como anulada la orden    
     estado = models.BooleanField('Anulacion de orden de compra', help_text="Una vez que se reciban todos los productos se anula la orden de compra")
@@ -56,29 +56,43 @@ class OrdenDeCompra(models.Model):
         if(self.cantidad_producto != 0):
             producto = Producto.objects.get(id=self.producto.id)
             totalproducto = self.cantidad_producto*producto.precio_compra
-            self.total = totalproducto                    
+            self.total = totalproducto
         
-        if(self.cantidadrecibida <> 0):
+        if(self.cantidadrecibida):
             print 'Fueron recibidos los productos, se aumenta el stock. Se guarda un informe de recepcion'
             producto = Producto.objects.get(id=self.producto.id)
-            producto.stock = producto.stock + self.cantidad_producto
+            producto.stock = producto.stock + self.cantidadrecibida
             producto.save()
             nuevarecepcion = Recepcion()
+            nuevarecepcion.ordencompra = OrdenDeCompra.objects.get(id = self.id)
             nuevarecepcion.proveedor = self.proveedor
+            nuevarecepcion.numerofactura = self.factura
             nuevarecepcion.fecharecepcion = self.fecharecepcion
             nuevarecepcion.fechaemision = self.fechaemision
             nuevarecepcion.producto = self.producto
             nuevarecepcion.cantidadrecibida = self.cantidadrecibida
             nuevarecepcion.save()
+            
+            nuevopago = Pago()
+            nuevopago.ordencompra = OrdenDeCompra.objects.get(id = self.id)
+            nuevopago.proveedor = self.proveedor
+            nuevopago.estado = 'PENDIENTE'
+            nuevopago.total = self.cantidadrecibida * self.producto.precio_compra
+            nuevopago.tipopago = self.tipopago
+            nuevopago.save()
+
+        ordenes = Recepcion.objects.filter(ordencompra = self.id)
+        #si hay recepciones que hacen referencia a la orden de compra, se seleccionan y si alcanzan
+        #la cantidad de productos pedidos, se anula la orden de compra 
+        if(ordenes):
+            totalrecepcionorden = 0
+            for i in ordenes:
+                totalrecepcionorden = totalrecepcionorden + i.cantidadrecibida
+                
+            if(totalrecepcionorden>=self.cantidad_producto):
+                self.estado = True
         
-        #cuando se reciben todos los productos se anula la orden de compra
-        if(self.cantidadrecibida == self.cantidad_producto):
-            self.estado = True
-        
-        self.fechaemision = ' '
-        self.fecharecepcion = ' '
-        self.cantidadrecibida = 0
-        super(OrdenDeCompra, self).save(*args, **kwargs) # Call the "real" save() method.
+        super(OrdenDeCompra, self).save(*args, **kwargs) # Call the "real" save() method.        
         
         if(self.aprobado is True):
             print 'Fue aprobada la orden'
@@ -96,22 +110,33 @@ class OrdenDeCompra(models.Model):
 
 class Recepcion(models.Model):
     proveedor = models.ForeignKey(Proveedor)
+    ordencompra = models.ForeignKey(OrdenDeCompra)
     numerofactura = models.CharField(max_length=20,)
     fecharecepcion = models.DateField()
     fechaemision = models.DateField()
     producto = models.ForeignKey(Producto)
     cantidadrecibida = models.IntegerField()
+    
+    def __unicode__(self):
+        return self.proveedor.proveedor
 
 class Pago(models.Model):
     ESTADO_CHOICES= (
     ('PAGADO','Pagado'),
     ('PENDIENTE','Pendiente'),
     )
+    
+    PAGO_CHOICES = (
+    ('CONTADO','Contado'),
+    ('AMORTIZADO','Amortizado'),
+    )
+    
     cheque = models.ForeignKey(Cheque, null = True, blank= True)
     ordencompra = models.ForeignKey(OrdenDeCompra)
     proveedor = models.ForeignKey(Proveedor)
     estado = models.CharField(max_length=20,choices = ESTADO_CHOICES)
     total = models.IntegerField()
+    tipopago = models.CharField(max_length=20,choices = PAGO_CHOICES)
     
     def __unicode__(self):
         return self.proveedor.proveedor
@@ -166,7 +191,7 @@ class ReservaAsiento(models.Model):
         #al confirmar el pago se debe descontar de stock
         #en teoria deberia tambien imprimir el ticket
         if(self.pagado is True):
-            #pelicula = Pelicula.objects.get(id = self.proyeccion.pelicula)
+            refreshStock(self.combo)
             ingentrada = Registro()
             ingentrada.fecha = date.today()
             ingentrada.concepto = 'Venta de tickets de cine. Pelicula '+str(self.proyeccion.pelicula)+'. Cantidad '+str(self.cantidad_menor+self.cantidad_mayor)+'.'
@@ -187,8 +212,6 @@ class ReservaAsiento(models.Model):
                 totalbalance = Registro.objects.get(id = 1)
                 totalbalance.ingreso = totalbalance.ingreso + ingcombo.ingreso
                 totalbalance.save()
-            
-            refreshStock(self.combo)
         super(ReservaAsiento, self).save(*args, **kwargs) #Call the "real" save() method.
 
 
@@ -198,16 +221,21 @@ def refreshStock(combo):
     -recuperar combo
     -recuperar productos finales
     -recuperar producto''' 
+    print('llega hasta refresh')
+    print(combo.productofinal)
     #combo = Combo.objects.get(id=combo) #se recupera el combo
     #lista de productos finales en combo
     for i in combo.productofinal.all():
         #productofinal = ProductoFinal.objects.get(id.)
+        print('llega hasta el for de producto final')
         producto = Producto.objects.get(id =i.producto_id) #es producto id porque hace referencia a un number, no a un objetos
         if(producto.categoria == 'BEBIDA'):
+            print('llega hasta la resta de bebida')
             totalrestar = combo.cant_bebida*(i.volumen/float(1000))
             #print(productofinal,totalrestar)
         else:
             if(producto.categoria == "COMESTIBLE"):
+                print('llega hasta la resta de comestible')
                 totalrestar = combo.cant_comestible*(i.volumen/float(1000))
                 #print(productofinal,totalrestar)
                 if(i.descripcion.find('pororo')):
@@ -244,7 +272,7 @@ def controlarStock(producto):
 def generarOrdenDeCompra(producto):
     p = Producto.objects.get(id = producto)
     ordencompra = OrdenDeCompra()
-    ordencompra.fecha = datetime.now()
+    ordencompra.fecha = date.today()
     ordencompra.producto = p
     ordencompra.proveedor = p.proveedor
     ordencompra.aprobado = False

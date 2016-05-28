@@ -7,13 +7,15 @@ from . import models
 class PagoAdmin(admin.ModelAdmin):
     list_display = ('proveedor','estado','total')
     list_filter = ('proveedor',)
-    readonly_fields = ('cheque','ordencompra','proveedor','estado','total',)
+    readonly_fields = ('ordencompra','proveedor','total','tipopago',)
 
 class ReservaAdmin(admin.ModelAdmin):
     list_display = ('usuario','proyeccion', 'fechafuncion','horario','total','pagado')
+    class Media:
+        js = ('/static/admin/js/hide_attribute.js',)
 
 class OrdenDeCompraAdmin(admin.ModelAdmin):
-    list_display = ('producto','proveedor', 'cantidad_producto',)
+    list_display = ('producto','proveedor', 'cantidad_producto','aprobado','estado',)
     class Media:
         js = ('/static/admin/js/hide_attribute.js',)
     
@@ -24,8 +26,12 @@ class RegistroAdmin(admin.ModelAdmin):
     list_display = ('fecha', 'concepto','ingreso','egreso',)
     readonly_fields = ('concepto', 'fecha', 'ingreso','egreso',)
 
+class RecepcionAdmin(admin.ModelAdmin):
+    list_display = ('numerofactura', 'proveedor','producto','fecharecepcion','fechaemision',)
+    #readonly_fields = ('concepto', 'fecha', 'ingreso','egreso',)
+
 admin.site.register(OrdenDeCompra,OrdenDeCompraAdmin)
-admin.site.register(Recepcion)
+admin.site.register(Recepcion, RecepcionAdmin)
 admin.site.register(Pago, PagoAdmin)
 admin.site.register(ReservaAsiento, ReservaAdmin)
 admin.site.register(Registro, RegistroAdmin)
