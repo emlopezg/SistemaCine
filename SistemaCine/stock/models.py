@@ -21,11 +21,9 @@ class OrdenDeCompra(models.Model):
     ('AMORTIZADO','Amortizado'),
     )
     DIA_CHOICES= (
-    ('1','1'), ('2','2'), ('3','3'), ('4','4'), ('5','5'), ('6','6'), ('7','7'), 
-    ('8','8'), ('9','9'), ('10','10'), ('11','11'), ('12','12'), ('13','13'), 
-    ('14','14'), ('15','15'), ('16','16'), ('17','17'), ('18','18'), ('19','19'), 
-    ('20','20'), ('21','21'), ('22','22'), ('23','23'), ('24','24'),('25','25'),
-    ('26','26'), ('27','27'), ('28','28'),
+    (1,1), (2,2), (3,3), (4,4), (5,5), (6,6), (7,7), (8,8), (9,9), (10,10), (11,11), (12,12), 
+    (13,13), (14,14), (15,15), (16,16), (17,17), (18,18), (19,19), (20,20), (21,21), (22,22), 
+    (23,23), (24,24),(25,25), (26,26), (27,27), (28,28),
     )
     
     fecha = models.DateField()
@@ -140,6 +138,20 @@ class Pago(models.Model):
     
     def __unicode__(self):
         return self.proveedor.proveedor
+    
+    def save(self, *args, **kwargs):            
+        super(Pago, self).save(*args, **kwargs) # Call the "real" save() method.
+        if(self.estado=='PAGADO'):
+            nuevoegreso = Registro()
+            nuevoegreso.concepto = 'Pago al proveedor '+str(self.proveedor)+' por recepcion de producto: '+str(self.ordencompra)+'.'
+            nuevoegreso.ingreso = 0
+            nuevoegreso.egreso = self.total
+            nuevoegreso.fecha = date.today()
+            nuevoegreso.save()
+            
+            total = Registro.objects.get(id = 9999999)
+            total.egreso = total.egreso + self.total
+            total.save()
 
 class Registro(models.Model):
     ESTADO_CHOICES= (
@@ -198,7 +210,7 @@ class ReservaAsiento(models.Model):
             ingentrada.ingreso = self.totalentrada
             ingentrada.egreso = 0
             ingentrada.save()
-            totalbalance = Registro.objects.get(id = 1)
+            totalbalance = Registro.objects.get(id = 9999999)
             totalbalance.ingreso = totalbalance.ingreso + ingentrada.ingreso
             totalbalance.save()
             if (self.combo):
@@ -209,7 +221,7 @@ class ReservaAsiento(models.Model):
                 ingcombo.ingreso = self.totalcombo
                 ingcombo.egreso = 0
                 ingcombo.save()
-                totalbalance = Registro.objects.get(id = 1)
+                totalbalance = Registro.objects.get(id = 9999999)
                 totalbalance.ingreso = totalbalance.ingreso + ingcombo.ingreso
                 totalbalance.save()
         super(ReservaAsiento, self).save(*args, **kwargs) #Call the "real" save() method.

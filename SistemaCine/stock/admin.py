@@ -14,6 +14,7 @@ class ReservaAdmin(admin.ModelAdmin):
     class Media:
         js = ('/static/admin/js/hide_attribute.js',)
 
+
 class OrdenDeCompraAdmin(admin.ModelAdmin):
     list_display = ('producto','proveedor', 'cantidad_producto','aprobado','estado',)
     class Media:
@@ -27,7 +28,7 @@ class RegistroAdmin(admin.ModelAdmin):
     readonly_fields = ('concepto', 'fecha', 'ingreso','egreso',)
 
 class RecepcionAdmin(admin.ModelAdmin):
-    list_display = ('numerofactura', 'proveedor','producto','fecharecepcion','fechaemision',)
+    list_display = ('numerofactura', 'proveedor','producto', 'cantidadrecibida','fecharecepcion',)
     #readonly_fields = ('concepto', 'fecha', 'ingreso','egreso',)
 
 admin.site.register(OrdenDeCompra,OrdenDeCompraAdmin)
