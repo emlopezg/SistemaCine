@@ -26,7 +26,6 @@ django.jQuery(document).ready(function(){
 	django.jQuery("#id_cantidadrecibida").val("");
 	django.jQuery("#id_factura").val("");
 	django.jQuery("#id_dia").val("");
-	django.jQuery("#id_meses").val("");
 	
 	//cuando una orden de compra se anula, se deshabilitan los campos de esa orden
 	if (django.jQuery("#id_estado").prop('checked')) {
@@ -53,6 +52,7 @@ django.jQuery(document).ready(function(){
         //django.jQuery(".field-total").hide();
     }
     
+    
     django.jQuery('#id_tipopago').change(function() {
         if (django.jQuery(this).find(':selected').val() === 'AMORTIZADO') {
         	//alert('entra al if')
@@ -66,7 +66,16 @@ django.jQuery(document).ready(function(){
         }
     });
     
-  //jQuery("checkbox:fist")
+  //para que siga mostrando aunque no se haya usado el select
+	if(django.jQuery("#id_tipopago").find(':selected').val() === 'AMORTIZADO'){
+    	django.jQuery(".field-diapago").slideDown('slow');
+    	django.jQuery(".field-meses").slideDown('slow');
+    }else{
+    	django.jQuery(".field-diapago").slideUp('slow');
+		django.jQuery(".field-meses").slideUp('slow');
+	}
+    
+
     /**if (django.jQuery("checkbox:last").not(":checked")) {
     	//alert("hola")
     	//alert(django.jQuery(".form-row field-fechafactura"))

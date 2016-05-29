@@ -37,7 +37,7 @@ class OrdenDeCompra(models.Model):
     fecharecepcion = models.DateField('Fecha de Recepcion', null = True, blank = True)
     fechaemision = models.DateField('Fecha de emision',null = True, blank = True)
     factura = models.CharField('Numero de Factura',max_length =20, null = True, blank = True)
-    tipopago = models.CharField(max_length =20,choices = TIPOPAGO_CHOICES, blank = True)
+    tipopago = models.CharField(max_length =20,choices = TIPOPAGO_CHOICES, blank = True, help_text='Elegir forma de pago de la/s recepcion/es de productos')
     diapago = models.IntegerField(choices = DIA_CHOICES, null = True, blank = True)
     meses = models.IntegerField(null = True, blank = True)
     #en save verificar que el total recibido. Si es igual al total pedido, marcar como anulada la orden    
@@ -70,15 +70,29 @@ class OrdenDeCompra(models.Model):
             nuevarecepcion.producto = self.producto
             nuevarecepcion.cantidadrecibida = self.cantidadrecibida
             nuevarecepcion.save()
-            
-            nuevopago = Pago()
-            nuevopago.ordencompra = OrdenDeCompra.objects.get(id = self.id)
-            nuevopago.proveedor = self.proveedor
-            nuevopago.estado = 'PENDIENTE'
-            nuevopago.total = self.cantidadrecibida * self.producto.precio_compra
-            nuevopago.tipopago = self.tipopago
-            nuevopago.save()
-
+            if(self.tipopago =='CONTADO'):
+                nuevopago = Pago()
+                nuevopago.ordencompra = OrdenDeCompra.objects.get(id = self.id)
+                nuevopago.proveedor = self.proveedor
+                nuevopago.estado = 'PENDIENTE'
+                nuevopago.total = self.cantidadrecibida * self.producto.precio_compra
+                nuevopago.tipopago = self.tipopago
+                nuevopago.save()
+            else:
+                #solo el pago amortizado define varios registros de pago
+                if(self.tipopago =='AMORTIZADO'):
+                    #lo que se debe pagar por mes
+                    pagarpormes = (self.cantidadrecibida * self.producto.precio_compra)/self.meses
+                    #por cada mes crear una orden de pago
+                    for i in range(self.meses):
+                        nuevopago = Pago()
+                        nuevopago.ordencompra = OrdenDeCompra.objects.get(id = self.id)
+                        nuevopago.proveedor = self.proveedor
+                        nuevopago.estado = 'PENDIENTE'
+                        nuevopago.total = pagarpormes
+                        nuevopago.tipopago = self.tipopago
+                        nuevopago.save()
+                        
         ordenes = Recepcion.objects.filter(ordencompra = self.id)
         #si hay recepciones que hacen referencia a la orden de compra, se seleccionan y si alcanzan
         #la cantidad de productos pedidos, se anula la orden de compra 
@@ -141,6 +155,22 @@ class Pago(models.Model):
     
     def save(self, *args, **kwargs):            
         super(Pago, self).save(*args, **kwargs) # Call the "real" save() method.
+        if(self.tipopago == 'AMORTIZADO'):
+            fecha = date.today()
+            orden = OrdenDeCompra.objects.get(id = self.ordencompra.id)
+            if(fecha.day == 5):
+                egreso = orden.meses
+                nuevoegreso = Registro()
+                nuevoegreso.concepto = 'Pago al proveedor '+str(self.proveedor)+' por recepcion de producto: '+str(self.ordencompra)+'.'
+                nuevoegreso.ingreso = 0
+                nuevoegreso.egreso = self.total
+                nuevoegreso.fecha = date.today()
+                nuevoegreso.save()
+            
+                total = Registro.objects.get(id = 9999999)
+                total.egreso = total.egreso + self.total
+                total.save()
+        
         if(self.estado=='PAGADO'):
             nuevoegreso = Registro()
             nuevoegreso.concepto = 'Pago al proveedor '+str(self.proveedor)+' por recepcion de producto: '+str(self.ordencompra)+'.'
