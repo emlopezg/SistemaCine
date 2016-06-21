@@ -7,6 +7,10 @@ from cinema.models import Proyeccion, Horario, Pelicula
 from django.core.mail.message import EmailMessage
 from bancos.models import Cheque
 from datetime import date
+from SistemaCine.settings import MEDIA_ROOT
+from reportlab.pdfgen import canvas
+from reportlab.lib.pagesizes import letter
+
 
 # Create your models here.
 
@@ -150,15 +154,19 @@ class Pago(models.Model):
     total = models.IntegerField()
     tipopago = models.CharField(max_length=20,choices = PAGO_CHOICES)
     
+    #class Admin:
+        #list_filter = ('proveedor',)
+        #ordering = ('',)
+    
     def __unicode__(self):
         return self.proveedor.proveedor
     
     def save(self, *args, **kwargs):            
         super(Pago, self).save(*args, **kwargs) # Call the "real" save() method.
-        if(self.tipopago == 'AMORTIZADO'):
+        '''if(self.tipopago == 'AMORTIZADO'):
             fecha = date.today()
             orden = OrdenDeCompra.objects.get(id = self.ordencompra.id)
-            if(fecha.day == 5):
+            if(fecha.day == orden.diapago):
                 egreso = orden.meses
                 nuevoegreso = Registro()
                 nuevoegreso.concepto = 'Pago al proveedor '+str(self.proveedor)+' por recepcion de producto: '+str(self.ordencompra)+'.'
@@ -169,16 +177,16 @@ class Pago(models.Model):
             
                 total = Registro.objects.get(id = 9999999)
                 total.egreso = total.egreso + self.total
-                total.save()
+                total.save()'''
         
         if(self.estado=='PAGADO'):
             nuevoegreso = Registro()
-            nuevoegreso.concepto = 'Pago al proveedor '+str(self.proveedor)+' por recepcion de producto: '+str(self.ordencompra)+'.'
+            nuevoegreso.concepto = 'Pago al proveedor '+str(self.proveedor)+' por recepcion de producto: '
             nuevoegreso.ingreso = 0
             nuevoegreso.egreso = self.total
             nuevoegreso.fecha = date.today()
             nuevoegreso.save()
-            
+        
             total = Registro.objects.get(id = 9999999)
             total.egreso = total.egreso + self.total
             total.save()
@@ -211,6 +219,34 @@ class Asiento(models.Model):
     tipo = models.CharField(max_length=8, choices = TIPO_CHOICES,)
     cantidad = models.IntegerField()
 
+
+#generar boleto
+'''def report(request,id):
+    # Create the HttpResponse object with the appropriate PDF headers.
+    #if request.POST:
+    usuario = request.GET.get('usuario')
+    print(usuario)
+    #reserva = ReservaAsiento.objects.get(id = idreserva)
+    #usuario = reserva.usuario
+    #pelicula = reserva.proyeccion
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="ticket.pdf"'
+    
+    # Create the PDF object, using the response object as its "file."
+    p = canvas.Canvas(response)
+
+    # Draw things on the PDF. Here's where the PDF generation happens.
+    # See the ReportLab documentation for the full list of functionality.
+    #p.drawString(100, 100, "Imprimir  y pelicula :"+str(usuario)+' '+str(pelicula))
+    p.drawString(100, 100, "Imprimir  y pelicula :")
+
+    # Close the PDF object cleanly, and we're done.
+    p.showPage()
+    p.save()
+        #return HttpResponseRedirect('/main')
+    return response
+'''
+
 class ReservaAsiento(models.Model):
     fechareserva = models.DateField('Fecha de reserva')
     usuario = models.ForeignKey(User)
@@ -225,6 +261,7 @@ class ReservaAsiento(models.Model):
     totalcombo = models.IntegerField('Total a pagar por combo/s')
     total = models.IntegerField('Total a pagar')
     pagado = models.BooleanField(help_text = 'Cobrar al cliente una vez que venga a retirar la entrada')
+    ticket = models.FileField(upload_to='tickets', null=True, blank=True)
     
     def __unicode__(self):
         return str(self.fechareserva)
@@ -233,6 +270,12 @@ class ReservaAsiento(models.Model):
         #al confirmar el pago se debe descontar de stock
         #en teoria deberia tambien imprimir el ticket
         if(self.pagado is True):
+            nombrearchivo = 'ticket'+str(self.id)+'.pdf'
+            p = canvas.Canvas(MEDIA_ROOT+'/tickets/'+nombrearchivo, pagesize=letter)
+            p.drawString(100, 100, "Imprimir  y pelicula :"+str(self.usuario))
+            p.showPage()
+            p.save()
+            self.ticket = 'tickets/'+nombrearchivo
             refreshStock(self.combo)
             ingentrada = Registro()
             ingentrada.fecha = date.today()
@@ -254,7 +297,7 @@ class ReservaAsiento(models.Model):
                 totalbalance = Registro.objects.get(id = 9999999)
                 totalbalance.ingreso = totalbalance.ingreso + ingcombo.ingreso
                 totalbalance.save()
-        super(ReservaAsiento, self).save(*args, **kwargs) #Call the "real" save() method.
+            super(ReservaAsiento, self).save(*args, **kwargs) #Call the "real" save() method.
 
 
 def refreshStock(combo):

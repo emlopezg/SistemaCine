@@ -7,10 +7,11 @@ from . import models
 class PagoAdmin(admin.ModelAdmin):
     list_display = ('proveedor','estado','total')
     list_filter = ('proveedor',)
+    ordering = ('ordencompra__diapago',)
     readonly_fields = ('ordencompra','proveedor','total','tipopago',)
 
 class ReservaAdmin(admin.ModelAdmin):
-    list_display = ('usuario','proyeccion', 'fechafuncion','horario','total','pagado')
+    list_display = ('usuario','proyeccion', 'fechafuncion','horario','total','pagado','ticket',)
     class Media:
         js = ('/static/admin/js/hide_attribute.js',)
 

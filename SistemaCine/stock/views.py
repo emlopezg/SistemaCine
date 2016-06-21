@@ -8,6 +8,8 @@ from stock.models import OrdenDeCompra
 from cinema.models import Proyeccion, Pelicula, Sala
 from stock.models import ReservaAsiento, Asiento
 from django.contrib.auth.models import User
+from stock.admin import ReservaAdmin
+
 # Create your views here.
 PRECIO_ADULTOS_3D = 40000
 PRECIO_ADULTOS_2D = 30000

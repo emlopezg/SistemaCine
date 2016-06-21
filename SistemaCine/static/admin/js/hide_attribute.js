@@ -15,6 +15,13 @@ django.jQuery(document).ready(function(){
 		django.jQuery("#id_totalcombo").prop('disabled', true);
 		django.jQuery("#id_total").prop('disabled', true);
 		django.jQuery("#id_pagado").prop('disabled', true);
+		
+		//var texto = 'Pelicula: ',;
+		//jAlert(, 'Alert Dialog');
+		//$('#popup').fadeIn('slow');
+        //$('.popup-overlay').fadeIn('slow');
+        //alert()
+        //$('.popup-overlay').height($(window).height());
 	}
 	
 	
